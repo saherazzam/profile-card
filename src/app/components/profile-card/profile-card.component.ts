@@ -80,15 +80,25 @@ onSaveHover(isHovering: boolean): void {
     this.isEditing = !this.isEditing;
   }
 
-  saveChanges(): void {
-    const updated = { ...this.profile, ...this.editForm };
-    this.profileService.saveProfile(updated);
-    this.profile = updated;
-    this.isEditing = false;
-    this.saveSuccess = true;
-    setTimeout(() => this.saveSuccess = false, 3000);
-  }
-
+saveChanges(): void {
+  this.profile = {
+    ...this.profile,
+    fullName: this.editForm.fullName,
+    role: this.editForm.role,
+    location: this.editForm.location,
+    bio: this.editForm.bio,
+    email: this.editForm.email,
+    settings: {
+      ...this.profile.settings,
+      notifications: { ...this.editForm.settings.notifications },
+      privacy: { ...this.editForm.settings.privacy }
+    }
+  };
+  this.profileService.saveProfile(this.profile);
+  this.isEditing = false;
+  this.saveSuccess = true;
+  setTimeout(() => this.saveSuccess = false, 3000);
+}
   resetProfile(): void {
     this.profileService.resetProfile().subscribe(data => {
       this.profile = data;

@@ -2,9 +2,9 @@
   <div class="card" *ngIf="profile">
 
     <!-- Rive Animation -->
-   <div class="rive-container">
-  <canvas #riveCanvas width="120" height="120"></canvas>
-</div>
+    <div class="rive-container">
+      <canvas #riveCanvas width="120" height="120"></canvas>
+    </div>
 
     <!-- Profile Header -->
     <div class="profile-header">
@@ -13,6 +13,9 @@
         <h1 class="full-name">{{ profile.fullName }}</h1>
         <span class="role">{{ profile.role }}</span>
         <span class="location">📍 {{ profile.location }}</span>
+        <span class="email-display" *ngIf="profile.settings.privacy.showEmail">
+          ✉️ {{ profile.email }}
+        </span>
       </div>
     </div>
 
@@ -32,10 +35,37 @@
       </div>
     </div>
 
-    <!-- Bio -->
-    <div class="section">
-      <p class="bio" *ngIf="!isEditing">{{ profile.bio }}</p>
-      <textarea *ngIf="isEditing" [(ngModel)]="editForm.bio" class="input" rows="3"></textarea>
+    <!-- Bio (only if profile is public) -->
+    <div class="section" *ngIf="!isEditing && profile.settings.privacy.profilePublic">
+      <p class="bio">{{ profile.bio }}</p>
+    </div>
+
+    <!-- Private message -->
+    <div class="private-banner" *ngIf="!isEditing && !profile.settings.privacy.profilePublic">
+      🔒 This profile is private
+    </div>
+
+    <!-- View Mode Settings (only if profile is public) -->
+    <div class="section" *ngIf="!isEditing && profile.settings.privacy.profilePublic">
+      <h3 class="section-title">Notifications</h3>
+      <div class="toggle-row">
+        <span>Email</span>
+        <span class="badge" [class.active]="profile.settings.notifications.email">
+          {{ profile.settings.notifications.email ? 'On' : 'Off' }}
+        </span>
+      </div>
+      <div class="toggle-row">
+        <span>Push</span>
+        <span class="badge" [class.active]="profile.settings.notifications.push">
+          {{ profile.settings.notifications.push ? 'On' : 'Off' }}
+        </span>
+      </div>
+      <div class="toggle-row">
+        <span>SMS</span>
+        <span class="badge" [class.active]="profile.settings.notifications.sms">
+          {{ profile.settings.notifications.sms ? 'On' : 'Off' }}
+        </span>
+      </div>
     </div>
 
     <!-- Edit Form -->
@@ -94,7 +124,7 @@
       </div>
     </div>
 
-    <!-- Skills -->
+    <!-- Skills (always visible) -->
     <div class="section">
       <h3 class="section-title">Skills</h3>
       <div class="skills-row">
@@ -108,7 +138,7 @@
         {{ isEditing ? 'Cancel' : 'Edit Profile' }}
       </button>
 
-     <button
+      <button
         *ngIf="isEditing"
         class="btn btn-primary"
         (click)="saveChanges()"
