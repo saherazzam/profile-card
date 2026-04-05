@@ -25,7 +25,7 @@ The `public/data/data.json` file simulates a MongoDB document with:
 
 ## Rive Animation
 - File: `public/animations/avatar.riv`
-- Source: [Personal Avatar by brynjar](https://rive.app/s/j4N6a5tvQ0_gjyQ6Rs8Deg)
+- Source: [Personal Avatar by brynjar](https://rive.app/community/files/18995-35741-personal-avatar/)
 - Trigger: `clicked` input fires when hovering over the Save Changes button
 
 ## Design Reference
