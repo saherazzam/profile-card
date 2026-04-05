@@ -1,0 +1,135 @@
+<div class="page-wrapper">
+  <div class="card" *ngIf="profile">
+
+    <!-- Rive Animation -->
+   <div class="rive-container">
+  <canvas #riveCanvas width="120" height="120"></canvas>
+</div>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <img [src]="profile.avatar" [alt]="profile.fullName" class="avatar" />
+      <div class="profile-info">
+        <h1 class="full-name">{{ profile.fullName }}</h1>
+        <span class="role">{{ profile.role }}</span>
+        <span class="location">📍 {{ profile.location }}</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-value">{{ profile.stats.projects }}</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ profile.stats.followers }}</span>
+        <span class="stat-label">Followers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ profile.stats.following }}</span>
+        <span class="stat-label">Following</span>
+      </div>
+    </div>
+
+    <!-- Bio -->
+    <div class="section">
+      <p class="bio" *ngIf="!isEditing">{{ profile.bio }}</p>
+      <textarea *ngIf="isEditing" [(ngModel)]="editForm.bio" class="input" rows="3"></textarea>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="section" *ngIf="isEditing">
+      <h3 class="section-title">Edit Profile</h3>
+
+      <label class="label">Full Name</label>
+      <input [(ngModel)]="editForm.fullName" class="input" type="text" />
+
+      <label class="label">Role</label>
+      <input [(ngModel)]="editForm.role" class="input" type="text" />
+
+      <label class="label">Location</label>
+      <input [(ngModel)]="editForm.location" class="input" type="text" />
+
+      <label class="label">Email</label>
+      <input [(ngModel)]="editForm.email" class="input" type="email" />
+
+      <h3 class="section-title">Notifications</h3>
+      <div class="toggle-row">
+        <span>Email Notifications</span>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="editForm.settings.notifications.email" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>Push Notifications</span>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="editForm.settings.notifications.push" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>SMS Notifications</span>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="editForm.settings.notifications.sms" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <h3 class="section-title">Privacy</h3>
+      <div class="toggle-row">
+        <span>Public Profile</span>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="editForm.settings.privacy.profilePublic" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>Show Email</span>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="editForm.settings.privacy.showEmail" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="section">
+      <h3 class="section-title">Skills</h3>
+      <div class="skills-row">
+        <span class="skill-tag" *ngFor="let skill of profile.skills">{{ skill }}</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button class="btn btn-secondary" (click)="toggleEdit()">
+        {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+      </button>
+
+     <button
+        *ngIf="isEditing"
+        class="btn btn-primary"
+        (click)="saveChanges()"
+        (mouseenter)="onSaveHover(true)"
+        (mouseleave)="onSaveHover(false)"
+        (mouseover)="onAvatarClick()">
+        Save Changes
+      </button>
+
+      <button class="btn btn-ghost" (click)="resetProfile()">Reset</button>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-banner" *ngIf="saveSuccess">
+      ✅ Profile saved successfully!
+    </div>
+
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="!profile">
+    <p>Loading profile...</p>
+  </div>
+</div>

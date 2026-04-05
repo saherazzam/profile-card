@@ -1,0 +1,31 @@
+{
+  "_id": { "$oid": "64b1f2c3e4b0a1d2e3f45678" },
+  "username": "Saher",
+  "email": "Saheraz2001@gmail.com",
+  "fullName": "Saher Azzam",
+  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=alex",
+  "role": "Frontend Developer",
+  "location": "Julis, Israel",
+  "bio": "Passionate about clean UI and modern web technologies.",
+  "skills": ["Angular", "TypeScript", "CSS", "MongoDB"],
+  "settings": {
+    "theme": "light",
+    "language": "en",
+    "notifications": {
+      "email": true,
+      "push": false,
+      "sms": true
+    },
+    "privacy": {
+      "profilePublic": true,
+      "showEmail": false
+    }
+  },
+  "stats": {
+    "projects": 12,
+    "followers": 340,
+    "following": 89
+  },
+  "createdAt": { "$date": "2023-07-15T10:30:00Z" },
+  "updatedAt": { "$date": "2024-01-20T14:45:00Z" }
+}
